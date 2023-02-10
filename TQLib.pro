@@ -149,6 +149,7 @@ win32 {
     HEADERS += \
     rtc_base/win/windows_version.h \
     rtc_base/win32.h \
+    rtc_base/win32_socket_init.h \
     rtc_base/task_queue_win.h
 
     SOURCES += \
