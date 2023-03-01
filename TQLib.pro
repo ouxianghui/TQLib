@@ -1,5 +1,5 @@
 TEMPLATE = app
-CONFIG += console c++20
+CONFIG += console c++17
 CONFIG -= app_bundle
 CONFIG -= qt
 
@@ -160,6 +160,10 @@ win32 {
 }
 
 linux {
+    DEFINES += WEBRTC_LINUX WEBRTC_POSIX
+
+    LIBS += -L$$PWD/abseil/lib/ -labsl -lpthread
+
     SOURCES += \
-    api/task_queue/default_task_queue_factory_stdlib.cc \
+    api/task_queue/default_task_queue_factory_stdlib.cc
 }
