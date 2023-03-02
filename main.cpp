@@ -9,9 +9,21 @@
 #endif
 
 #include "rtc_base/physical_socket_server.h"
-
+#include "rtc_base/third_party/sigslot/sigslot2.h"
 
 using namespace std;
+
+class Controller {
+public:
+    sigslot2::signal0<> _click;
+};
+
+class Worker : public sigslot2::HasSlots<>{
+public:
+    void onClicked() {
+        std::cout << "Worker::onClicked(): " << std::this_thread::get_id() << std::endl;
+    }
+};
 
 int main()
 {
@@ -25,7 +37,7 @@ int main()
     rtc::AutoSocketServerThread mainThread(&pss);
 #endif
 
-//    auto main = rtc::ThreadManager::Instance()->CurrentThread();
+    //auto main = rtc::ThreadManager::Instance()->CurrentThread();
 
     auto tqf = webrtc::CreateDefaultTaskQueueFactory();
     auto tq = tqf->CreateTaskQueue("my-queue", webrtc::TaskQueueFactory::Priority::NORMAL);
@@ -39,12 +51,18 @@ int main()
 
     event.Wait(webrtc::TimeDelta::Seconds(10));
 
-//    main->PostTask([&main](){
-//        cout << "call in main thread: " << std::this_thread::get_id() << endl;
-//        main->Stop();
-//    });
+    //main->PostTask([&main](){
+    //    cout << "call in main thread: " << std::this_thread::get_id() << endl;
+    //    main->Stop();
+    //});
+    //main->Run();
 
-//    main->Run();
+    Controller ctrl;
+    Worker worker;
+    ctrl._click.connect(&worker, &Worker::onClicked, sigslot2::DirectConnection | sigslot2::SingleShotConnection, &mainThread);
+
+    ctrl._click();
+    ctrl._click();
 
 #ifdef WEBRTC_WIN
     mainThread.Run();
