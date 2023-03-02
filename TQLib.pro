@@ -1,5 +1,5 @@
 TEMPLATE = app
-CONFIG += console c++17
+CONFIG += console c++20
 CONFIG -= app_bundle
 CONFIG -= qt
 
@@ -50,6 +50,8 @@ SOURCES += \
     rtc_base/task_queue.cc \
     rtc_base/task_queue_stdlib.cc \
     rtc_base/task_utils/repeating_task.cc \
+    rtc_base/third_party/sigslot/sigslot.cc \
+    rtc_base/third_party/sigslot/sigslot2.cc \
     rtc_base/thread.cc \
     rtc_base/time_utils.cc
 
@@ -119,6 +121,8 @@ HEADERS += \
     rtc_base/task_queue.h \
     rtc_base/task_queue_stdlib.h \
     rtc_base/task_utils/repeating_task.h \
+    rtc_base/third_party/sigslot/sigslot.h \
+    rtc_base/third_party/sigslot/sigslot2.h \
     rtc_base/thread.h \
     rtc_base/thread_annotations.h \
     rtc_base/time_utils.h \
