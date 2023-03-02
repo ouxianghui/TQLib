@@ -264,10 +264,6 @@ private:
 
     typedef void (*SlotDuplicateT)(ISignalBase* self, const IHasSlots* pOldSlot, IHasSlots* pNewSlot);
 
-    const SlotDisconnectT m_slotDisconnect;
-
-    const SlotDuplicateT m_slotDuplicate;
-
 protected:
     ISignalBase(SlotDisconnectT disc, SlotDuplicateT dupl)
         : m_slotDisconnect(disc), m_slotDuplicate(dupl) {}
@@ -282,6 +278,11 @@ public:
     void slotDuplicate(const IHasSlots* pOldSlot, IHasSlots* pNewSlot) {
         m_slotDuplicate(this, pOldSlot, pNewSlot);
     }
+
+private:
+    const SlotDisconnectT m_slotDisconnect;
+
+    const SlotDuplicateT m_slotDuplicate;
 };
 
 enum ConnectionType {

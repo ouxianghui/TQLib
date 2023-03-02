@@ -7,7 +7,6 @@
 #ifdef WEBRTC_WIN
 #include "rtc_base/win32_socket_init.h"
 #endif
-
 #include "rtc_base/physical_socket_server.h"
 #include "rtc_base/third_party/sigslot/sigslot2.h"
 
