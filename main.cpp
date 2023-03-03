@@ -14,11 +14,15 @@ using namespace std;
 
 class Controller {
 public:
+
+signals:
     sigslot2::signal0<> _click;
 };
 
 class Worker : public sigslot2::HasSlots<>{
-public:
+
+
+public slots:
     void onClicked1() {
         std::cout << "Worker::onClicked1(): " << std::this_thread::get_id() << std::endl;
     }

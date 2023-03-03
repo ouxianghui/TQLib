@@ -126,6 +126,14 @@
 #endif
 #endif
 
+#ifndef _ANNOTATE_ACCESS_SPECIFIER
+#define _ANNOTATE_ACCESS_SPECIFIER(x)
+#endif
+
+#define slots _ANNOTATE_ACCESS_SPECIFIER(rcv_slot)
+#define signals public _ANNOTATE_ACCESS_SPECIFIER(rcv_signal)
+
+
 // TODO: change this namespace to rtc?
 namespace sigslot2 {
 
