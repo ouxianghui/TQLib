@@ -354,7 +354,7 @@ public:
                 (caster.to)(this, args...);
             });
         } else if (type == ConnectionType::BlockingQueuedConnection) {
-            m_thread->BlockingCall([this, &caster, args...](){
+            m_thread->BlockingCall([this, &caster, &args...](){
                 (caster.to)(this, args...);
             });
         }
@@ -633,8 +633,8 @@ template <typename... Args>
 using signal = SignalWithThreadPolicy<SIGSLOT2_DEFAULT_MT_POLICY, Args...>;
 
 // The previous verion of sigslot didn't use variadic templates, so you would
-// need to write "sigslot::signal2<Arg1, Arg2>", for example.
-// Now you can just write "sigslot::signal<Arg1, Arg2>", but these aliases
+// need to write "sigslot2::signal2<Arg1, Arg2>", for example.
+// Now you can just write "sigslot2::signal<Arg1, Arg2>", but these aliases
 // exist for backwards compatibility.
 template <typename MTPolicy = SIGSLOT2_DEFAULT_MT_POLICY>
 using signal0 = SignalWithThreadPolicy<MTPolicy>;

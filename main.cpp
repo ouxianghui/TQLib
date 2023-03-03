@@ -19,8 +19,11 @@ public:
 
 class Worker : public sigslot2::HasSlots<>{
 public:
-    void onClicked() {
-        std::cout << "Worker::onClicked(): " << std::this_thread::get_id() << std::endl;
+    void onClicked1() {
+        std::cout << "Worker::onClicked1(): " << std::this_thread::get_id() << std::endl;
+    }
+    void onClicked2() {
+        std::cout << "Worker::onClicked2(): " << std::this_thread::get_id() << std::endl;
     }
 };
 
@@ -56,12 +59,27 @@ int main()
     //});
     //main->Run();
 
+    auto thread = rtc::Thread::Create();
+    thread->Start();
+
     Controller ctrl;
     Worker worker;
-    ctrl._click.connect(&worker, &Worker::onClicked, sigslot2::DirectConnection | sigslot2::SingleShotConnection, &mainThread);
 
+    int ret = -1;
+
+    ret = ctrl._click.connect(&worker, &Worker::onClicked1, sigslot2::QueuedConnection, &mainThread);
+    std::cout << "ret1: " << ret << std::endl;
+
+    ret = ctrl._click.connect(&worker, &Worker::onClicked2, sigslot2::BlockingQueuedConnection, thread.get());
+    std::cout << "ret2: " << ret << std::endl;
+
+    //ctrl._click();
+    //ctrl._click();
     ctrl._click();
-    ctrl._click();
+
+    std::cout << "done" << std::endl;
+
+    thread->Stop();
 
 #ifdef WEBRTC_WIN
     mainThread.Run();
