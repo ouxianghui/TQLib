@@ -130,9 +130,13 @@
 #define _ANNOTATE_ACCESS_SPECIFIER(x)
 #endif
 
+#ifndef slots
 #define slots _ANNOTATE_ACCESS_SPECIFIER(rcv_slot)
-#define signals public _ANNOTATE_ACCESS_SPECIFIER(rcv_signal)
+#endif
 
+#ifndef signals
+#define signals public _ANNOTATE_ACCESS_SPECIFIER(rcv_signal)
+#endif
 
 // TODO: change this namespace to rtc?
 namespace sigslot2 {
@@ -295,10 +299,15 @@ private:
 
 enum ConnectionType {
     AutoConnection = 0,
+
     DirectConnection = 1,
+
     QueuedConnection = 2,
+
     BlockingQueuedConnection = 3,
+
     UniqueConnection = 0x80,
+
     SingleShotConnection = 0x100
 };
 
