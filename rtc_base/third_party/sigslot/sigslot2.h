@@ -331,9 +331,9 @@ public:
         static_assert(sizeof(PMT) <= sizeof(pMethod), "Size of slot function pointer too large.");
         std::memcpy(pMethod, &pm, sizeof(PMT));
         typedef void (*EmT)(const OpaqueConnection* self, Args...);
-        UnionCaster<EmT, EmitT> caster2;
-        caster2.from = &OpaqueConnection::emitter<DestT, Args...>;
-        m_emit = caster2.to;
+        UnionCaster<EmT, EmitT> caster;
+        caster.from = &OpaqueConnection::emitter<DestT, Args...>;
+        m_emit = caster.to;
 
         m_singleShot = m_type & ConnectionType::SingleShotConnection;
         m_type &= ~ConnectionType::SingleShotConnection;
@@ -349,8 +349,7 @@ public:
         return res;
     }
 
-    // Just calls the stored "emitter" function pointer stored at construction
-    // time.
+    // Just calls the stored "emitter" function pointer stored at construction time.
     template <typename... Args>
     void emit(Args... args) const {
         typedef void (*EmT)(const OpaqueConnection*, Args...);
@@ -456,8 +455,9 @@ public:
         ConnectionsList::const_iterator it = m_connectedSlots.begin();
         ConnectionsList::const_iterator itEnd = m_connectedSlots.end();
         while (it != itEnd) {
-            if (it->getDest() == pClass)
+            if (it->getDest() == pClass) {
                 return true;
+            }
             ++it;
         }
         return false;
@@ -527,8 +527,6 @@ protected:
     // Used to handle a slot being disconnected while a signal is
     // firing (iterating m_connectedSlots).
     ConnectionsList::iterator m_currentIterator;
-
-    bool m_eraseCurrentIterator = false;
 };
 
 template <class MTPolicy = SIGSLOT2_DEFAULT_MT_POLICY>
@@ -702,8 +700,7 @@ template <typename A1,
           typename A6,
           typename A7,
           typename MTPolicy = SIGSLOT2_DEFAULT_MT_POLICY>
-using signal7 =
-SignalWithThreadPolicy<MTPolicy, A1, A2, A3, A4, A5, A6, A7>;
+using signal7 = SignalWithThreadPolicy<MTPolicy, A1, A2, A3, A4, A5, A6, A7>;
 
 template <typename A1,
           typename A2,
@@ -714,8 +711,7 @@ template <typename A1,
           typename A7,
           typename A8,
           typename MTPolicy = SIGSLOT2_DEFAULT_MT_POLICY>
-using signal8 =
-SignalWithThreadPolicy<MTPolicy, A1, A2, A3, A4, A5, A6, A7, A8>;
+using signal8 = SignalWithThreadPolicy<MTPolicy, A1, A2, A3, A4, A5, A6, A7, A8>;
 
 }  // namespace sigslot2
 
