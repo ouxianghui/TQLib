@@ -51,7 +51,7 @@ SOURCES += \
     rtc_base/task_queue_stdlib.cc \
     rtc_base/task_utils/repeating_task.cc \
     rtc_base/third_party/sigslot/sigslot.cc \
-    rtc_base/third_party/sigslot/sigslot2.cc \
+    rtc_base/third_party/sigslot/sigslot2.cpp \
     rtc_base/thread.cc \
     rtc_base/time_utils.cc
 
@@ -122,7 +122,7 @@ HEADERS += \
     rtc_base/task_queue_stdlib.h \
     rtc_base/task_utils/repeating_task.h \
     rtc_base/third_party/sigslot/sigslot.h \
-    rtc_base/third_party/sigslot/sigslot2.h \
+    rtc_base/third_party/sigslot/sigslot2.hpp \
     rtc_base/thread.h \
     rtc_base/thread_annotations.h \
     rtc_base/time_utils.h \
